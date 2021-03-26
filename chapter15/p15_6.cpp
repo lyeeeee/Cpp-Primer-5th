@@ -1,6 +1,7 @@
 #include <memory>
 #include <iostream>
-#include "./p15_5.h"
+#include "./p15_3Quote.h"
+#include "./p15_5Bulkquote.h"
 
 using std::cout;
 using std::endl;
