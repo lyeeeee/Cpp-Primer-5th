@@ -4,11 +4,9 @@
 using namespace std;
 class Func {
 public:
-    int operator()(bool v1, int v2, int v3) {
-        if (v1) return v2;
-        else return v3;
+    int operator ()(bool i, int a, int b) {
+        return i ? a : b;
     }
-
 };
 int main(int argc, char* argv[]) {
     Func f;

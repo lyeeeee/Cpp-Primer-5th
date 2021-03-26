@@ -4,13 +4,14 @@
 using namespace std;
 class Func {
 public:
-    int operator()(bool v1, int v2, int v3) {
-        if (v1) return v2;
-        else return v3;
+    string operator()(istream &in) {
+        string str;
+        in >> str;
+        return in ? str : std::string();
     }
 
 };
 int main(int argc, char* argv[]) {
     Func f;
-    cout << f(false, 1,2) << endl;
+    cout << f(std::cin) << endl;
 }

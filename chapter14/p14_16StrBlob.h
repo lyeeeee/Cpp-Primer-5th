@@ -98,6 +98,8 @@ public:
     std::string& dref() const;
     StrBlobPtr& incr();
 
+
+
 private:
     std::shared_ptr<std::vector<std::string>> check(std::size_t sz, const std::string& msg) const;
     std::weak_ptr<std::vector<std::string>> wptr;
