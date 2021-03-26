@@ -21,5 +21,13 @@ class Bulk_quote: public Disc_quote {
             return n * (1 - discount) * price;
         }
     }
+
+    virtual Bulk_quote* clone() const & {
+        return new Bulk_quote(*this);
+    }
+
+    virtual Bulk_quote* clone() const && {
+        return new Bulk_quote(std::move(*this));
+    }
 };
 #endif
