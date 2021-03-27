@@ -1,5 +1,5 @@
-#ifndef _P12_27_H_
-#define _P12_27_H_
+#ifndef _P16_22_H_
+#define _P16_22_H_
 #include <iostream>
 #include <map>
 #include <set>
@@ -10,7 +10,6 @@
 #include <fstream>
 #include <sstream>
 #include <cstring>
-#include "./p16_21.h"
 
 using namespace std;
 

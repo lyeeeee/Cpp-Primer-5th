@@ -11,7 +11,7 @@ using std::vector;
 
 template <typename T>
 void print_container(T &c) {
-  for (auto i = c.begin(); i != c.end(); ++i) {
+  for (typename T::iterator i = c.begin(); i != c.end(); ++i) {
     cout << c[i] << " ";
   }
   cout << endl;

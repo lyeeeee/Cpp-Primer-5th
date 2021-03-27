@@ -9,10 +9,14 @@ using std::endl;
 using std::vector;
 
 
-template <typename T>
+template<typename T>
 void print_container(T &c) {
-  for (T::size_type i = 0; i < c.size(); ++i) {
-    cout << c[i] << " ";
+  for (typename T::size_type i = 0; i < c.size(); ++i) {
+    cout << c[i] << endl;
   }
-  cout << endl;
+}
+
+int main() {
+  vector<string> v = {"1", "2", "3"};
+  print_container(v);
 }
