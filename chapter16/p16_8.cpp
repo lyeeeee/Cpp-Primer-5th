@@ -10,16 +10,6 @@ using std::vector;
 
 
 /**
- *
+ *因为大多数类只定义了 != 操作而没有定义 < 操作，使用 != 可以降低对要处理的类型的要求。
  *
 */
-
-template <typename T, unsigned N>
-T* beg(const T (&arr)[N]) {
-    return arr;
-}
-
-template <typename T, unsigned N>
-T* end(const T (&arr)[N]) {
-    return arr + N;
-}

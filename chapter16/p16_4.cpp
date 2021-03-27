@@ -8,19 +8,19 @@ using std::cout;
 using std::endl;
 using std::vector;
 
-
-template <typename T, typename Q>
-T my_find(T beg, T end, Q val) {
-    cout << "find" << endl;
+template <typename T, typename D>
+T my_find(const T& beg, const T&end, const D&target) {
+    T p = beg;
     while (beg != end) {
-        if (*beg == val) {
-            return beg;
+        if (*p == target) {
+            return p;
         }
-        beg++;
+        p++;
     }
-
     return end;
 }
+
+
 
 int main() {
     vector<int> v;
