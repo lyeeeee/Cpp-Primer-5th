@@ -54,6 +54,14 @@
         "compare": "cpp",
         "concepts": "cpp",
         "ranges": "cpp",
-        "ctime": "cpp"
+        "ctime": "cpp",
+        "chrono": "cpp",
+        "condition_variable": "cpp",
+        "ratio": "cpp",
+        "mutex": "cpp",
+        "shared_mutex": "cpp",
+        "thread": "cpp",
+        "regex": "cpp",
+        "stop_token": "cpp"
     }
 }
