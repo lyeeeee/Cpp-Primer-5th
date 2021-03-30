@@ -6,6 +6,5 @@ using std::string;
 using std::tuple;
 
 int main(int argc, char) {
-    tuple<int, int, int> t(10,20,30);
-
+    tuple<int, int, int> it(10,20,30);
 }

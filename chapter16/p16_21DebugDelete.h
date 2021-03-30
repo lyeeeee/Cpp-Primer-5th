@@ -1,3 +1,5 @@
+#ifndef __P16_21DEBUGDELETE_H__
+#define __P16_21DEBUGDELETE_H__
 #include <memory>
 #include <iostream>
 #include <vector>
@@ -20,6 +22,7 @@ public:
 private:
   std::ostream &out;
 };
+#endif
 
 // int main() {
 //   DeleteDebug d(std::cout);

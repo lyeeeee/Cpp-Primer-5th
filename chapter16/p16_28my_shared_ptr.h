@@ -1,5 +1,10 @@
+#ifndef __P16_28MY_SHARED_PTR_H__
+#define __P16_28MY_SHARED_PTR_H__
 #include "p16_21DebugDelete.h"
 
+
+template <typename>
+class MySharedPtr;
 
 template <typename T>
 void swap(MySharedPtr<T> &p1, MySharedPtr<T> &p2) {
@@ -12,24 +17,24 @@ template <typename T>
 class MySharedPtr {
 public:
     // 默认构造
-    MySharedPtr(): obj(nullptr), ref_cnt(new std::size_t(1)), deleter(DeleteDebug()) {}
+    MySharedPtr(): obj(nullptr), ref_cnt(new std::size_t(1)), deleter{DeleteDebug()} {}
 
     // 有参构造
-    explicit MySharedPtr(T *p): obj(p), ref_cnt(new std::size_t(1)), deleter(DeleteDebug()) {
+    explicit MySharedPtr(T *p): obj(p), ref_cnt(new std::size_t(1)), deleter{DeleteDebug()} {
 
     }
     // 拷贝构造
-    SharedPtr(const SharedPtr &spt): obj(spt.obj), ref_cnt(spt.ref_cnt), deleter(ref_cnt.deleter)  {
+    MySharedPtr(const MySharedPtr<T> &spt): obj(spt.obj), ref_cnt(spt.ref_cnt), deleter{DeleteDebug()}  {
         (*ref_cnt)++;
     }
     // 移动构造
-    SharedPtr(const SharedPtr &&spt): obj(spt.obj), ref_cnt(spt.ref_cnt), deleter(ref_cnt.deleter) {
+    MySharedPtr(const MySharedPtr<T> &&spt): obj(spt.obj), ref_cnt(spt.ref_cnt), deleter{std::move(other.deleter)} {
         spt.ref_cnt = nullptr;
         spt.deleter = nullptr;
     }
 
     // 拷贝赋值
-    SharedPtr &operator=(const SharedPtr &other) {
+    MySharedPtr &operator=(const MySharedPtr<T> &other) {
         (*other.ref_cnt)++;
         decrement_n_destory();
         obj = other.obj;
@@ -38,7 +43,7 @@ public:
         return *this;
     }
     // 移动赋值
-    SharedPtr &operator=(const SharedPtr &&other) noexcept{
+    MySharedPtr &operator=(const MySharedPtr<T> &&other) noexcept{
         decrement_n_destory();
         obj = other.obj;
         deleter = other.deleter;
@@ -83,24 +88,24 @@ public:
         }
     }
 
-    void reset(T *p, const std::function<void(T*)> d) {
+    void reset(T *p, const std::function<void(T*)> &d) {
         reset(p);
         deleter = d;
     }
 
-    ~SharedPtr(){
+    ~MySharedPtr(){
         decrement_n_destory();
     }
 private:
     T *obj;
-    std::size_t ref_cnt;
-    std::function<void (T*)> deleter;
+    std::size_t *ref_cnt;
+    std::function<void(T*)> deleter;
 
     void decrement_n_destory() {
         (*ref_cnt)--;
-        if (0 == *ref_cnt && obj) {
+        if ((0 == *ref_cnt) && obj) {
             delete ref_cnt;
-            delete obj;
+            deleter(obj);
         }else if (!obj) {
             delete ref_cnt;
         }
@@ -108,3 +113,5 @@ private:
         obj = nullptr;
     }
 };
+
+#endif

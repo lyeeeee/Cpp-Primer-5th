@@ -7,11 +7,10 @@
 #include <memory>
 #include <fstream>
 #include <sstream>
-#include "p12_27.h"
+#include "p17_3TextQuery.h"
 #include <cstring>
 
 using namespace std;
-using std::make_tuple;
 
 TextQuery::TextQuery(ifstream &ifs) : lines(new vector<string>) {
     string s;
@@ -28,22 +27,26 @@ TextQuery::TextQuery(ifstream &ifs) : lines(new vector<string>) {
             nums->insert(line_n);
         }
     }
+    for (map<string, shared_ptr<set<size_type>>>::const_iterator it = word_map.cbegin(); it != word_map.cend(); ++it) {
+        cout << it->first << ": " << it->second << endl;
+    }
 }
 
-tuple<string, shared_ptr<set<TextQuery::size_type>>, vector<string>> TextQuery::query(const string word) const {
+tuple<string, shared_ptr<set<TextQuery::size_type>>, shared_ptr<vector<string>>> TextQuery::query(const string word) const {
     static shared_ptr<set<size_type>> nodata(new set<size_type>);
     if (word_map.find(word) != word_map.end()) {
+        cout << "find word:" << word << endl;
         auto val = word_map.find(word);
-        return tuple<string, shared_ptr<set<TextQuery::size_type>>, vector<string>>(word, val->second, lines);
+        return {word, val->second, lines};
     } else {
         return {word, nodata, lines};
     }
 }
 
-std::ostream& print(ostream& os, const QueryResult& qr) {
-	os << qr.find << " occurs " << qr.line_numbers->size() << " "
-		<< "time" << (qr.line_numbers->size() > 1 ? "s" : "") << endl;
-	for (auto num : *qr.line_numbers)
-		os << "\t(line " << num + 1 << ") " << *(qr.file->begin() + num) << endl;
+std::ostream& print(ostream& os, const tuple<string, shared_ptr<set<TextQuery::size_type>>, shared_ptr<vector<string>>> &qr) {
+	os << get<0>(qr) << " occurs " << get<1>(qr)->size() << " "
+		<< "time" << (get<1>(qr)->size() > 1 ? "s" : "") << endl;
+	for (auto num : *get<1>(qr))
+		os << "\t(line " << num + 1 << ") " << *(get<2>(qr)->begin() + num) << endl;
 	return os;
 }
