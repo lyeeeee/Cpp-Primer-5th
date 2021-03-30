@@ -20,7 +20,7 @@ struct Sales_data{
     friend ostream& print(ostream& out, const Sales_data& data);
     friend Sales_data operator+(Sales_data data1, Sales_data data2);
     friend istream &operator>>(istream &in, Sales_data &data);
-    friend ostream &operator<<(ostream &os, Sales_data &item);
+    friend ostream &operator<<(ostream &os, const Sales_data &item);
     private:
         string bookNo;
         unsigned units_sold = 0;
@@ -65,7 +65,7 @@ Sales_data operator+(Sales_data &data1, Sales_data &data2) {
 	return sum;
 }
 
-ostream &operator<<(ostream &os, Sales_data &item) {
+ostream &operator<<(ostream &os, const Sales_data &item) {
     os << item.isbn() << " " << item.units_sold << " " << item.revenue << " " << item.avg_price();
     return os;
 }
@@ -108,6 +108,7 @@ double Sales_data::avg_price() const{
 
 Sales_data& Sales_data::operator=(std::string &s) {
     bookNo = s;
+    return *this;
 }
 
 #endif //C__PRIMER_P14_2_H
